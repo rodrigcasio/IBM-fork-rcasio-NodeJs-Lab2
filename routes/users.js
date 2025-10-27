@@ -90,7 +90,7 @@ router.put('/:email', (req, res) => {     // updating info from existing user   
     users = users.filter((user) => user.email != email);
     users.push(filtered_user);
     
-    res.status(200).json({ message: `User with the email '${email}' successfully updated.` });
+    res.status(200).json({ message: `User with the email '${filtered_user.email}' successfully updated.` });
   } else {
       res.status(400).json({ message: `Unable to find user  with email '${email}'. Please try again.` });
   }

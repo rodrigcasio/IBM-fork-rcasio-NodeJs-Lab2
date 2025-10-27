@@ -30,9 +30,9 @@ router.get('/', (req, res) => {       // retrieve all users
 });
 
 
-router.get('/:email', (req, res) => {
+router.get('/:email', (req, res) => {      // filtered the users array to find whose email matches the extracted email parameter `:email`
   const email = req.params.email;
-  const filteredUser =  users.filter((user) => user.email === email);       // based on the email provided find the user whose email matches
+  const filteredUser =  users.filter((user) => user.email === email);
   
   if (!filteredUser) {
      return res.status(400).json({ message: 'Email Not Available'})
@@ -42,10 +42,17 @@ router.get('/:email', (req, res) => {
 
 });
 
-// POST request: Create a new user
-router.post("/",(req,res)=>{
-  // Copy the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+router.post('/', (req, res) => {      // based on the query parameters from the request, we push that new user into the 'users' db
+
+  users.push({
+    "firstName": req.query.firstName,
+    "lastName": req.query.lastName,
+    "email": req.query.emial,
+    "DOB": req.query.DOB
+  });
+
+
+  res.status(200).json({ message: `The user ${req.query.firstName} has been added successfully`}); 
 });
 
 
@@ -65,3 +72,23 @@ router.delete("/:email", (req, res) => {
 module.exports = router;
 
 
+
+/*
+  (FIRST APROACHES FOR PRACTICE)
+
+
+// POST request: Create a new user (first approach [not verified to be correct])
+router.post('/', (req, res) => {
+  const newUser = req.body;
+  
+  if (!newUser) {
+    return res.status(400).json({ message: 'Needed content for the request' });
+  }
+
+  users.push(newUser);
+  return res.status(200).json({ 
+    message: `New user named: '${newUser.firstName}' added successfully`,
+    email: newUser.email,
+  } );
+});
+*/

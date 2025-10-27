@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 
@@ -56,4 +57,6 @@ router.delete("/:email", (req, res) => {
   res.send("Yet to be implemented")//This line is to be replaced with actual return value
 });
 
-module.exports=router;
+module.exports = router;
+
+

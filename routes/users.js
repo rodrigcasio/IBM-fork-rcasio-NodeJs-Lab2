@@ -96,10 +96,20 @@ router.put('/:email', (req, res) => {     // updating info from existing user   
   }
 });
 
-// DELETE request: Delete a user by email ID
-router.delete("/:email", (req, res) => {
-  // Copy the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+router.delete('/:email', (req, res) => {
+  const email = req.params.email;
+  const userFound = users.find(user => user.email === email):
+  
+  if (!userFound) {
+    return res.status(403).json({ message: `Invalid email. Could not find user with email '${email}'.`});
+  }
+  
+  // if user found in db
+  // modifying the 'users' database with filter
+  // Filter the users array to exclude the user that match the email placed in the ':email'
+  
+  users = users.filter((user) => user.email != email);
+  res.status(200).json({ message: `User with email: '${email}' successfully deleted.` });
 });
 
 module.exports = router;

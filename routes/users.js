@@ -98,7 +98,7 @@ router.put('/:email', (req, res) => {     // updating info from existing user   
 
 router.delete('/:email', (req, res) => {
   const email = req.params.email;
-  const userFound = users.find(user => user.email === email):
+  const userFound = users.find(user => user.email === email);
   
   if (!userFound) {
     return res.status(403).json({ message: `Invalid email. Could not find user with email '${email}'.`});

@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
+router.use(express.json());
 
 let users = [
     {
@@ -24,18 +25,22 @@ let users = [
     },
 ];
 
-// GET request: Retrieve all users
-router.get("/",(req,res)=>{
-  // Copy the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+router.get('/', (req, res) => {       // retrieve all users
+   res.status(200).json(users);       // coverting json string to js object
 });
 
-// GET by specific ID request: Retrieve a single user with email ID
-router.get("/:email",(req,res)=>{
-  // Copy the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
-});
 
+router.get('/:email', (req, res) => {
+  const email = req.params.email;
+  const filteredUser =  users.filter((user) => user.email === email);       // based on the email provided find the user whose email matches
+  
+  if (!filteredUser) {
+     return res.status(400).json({ message: 'Email Not Available'})
+  }
+  
+  return res.status(200).json(filteredUser);
+
+});
 
 // POST request: Create a new user
 router.post("/",(req,res)=>{

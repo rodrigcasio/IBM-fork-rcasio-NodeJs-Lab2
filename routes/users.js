@@ -55,7 +55,7 @@ router.post('/', (req, res) => {      // based on the query parameters from the 
   res.status(200).json({ message: `The user ${req.query.firstName} has been added successfully`}); 
 });
 
-router.put('/:email', (req, res) => {     // updating info from existing user 
+router.put('/:email', (req, res) => {     // updating info from existing user   (can update email aswell if neccessary)
   const email = req.params.email;
   const filteredUsers = users.filter((user) => user.email === email);    // new array with only the user with the matched email
 

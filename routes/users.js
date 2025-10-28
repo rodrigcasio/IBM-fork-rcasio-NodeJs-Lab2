@@ -1,4 +1,4 @@
-
+// Modified
 const express = require('express');
 const router = express.Router();
 
@@ -42,12 +42,13 @@ router.get('/:email', (req, res) => {      // filtered the users array to find w
 
 });
 
+
 router.post('/', (req, res) => {      // based on the query parameters from the request, we push that new user into the 'users' db
 
   users.push({
     "firstName": req.query.firstName,
     "lastName": req.query.lastName,
-    "email": req.query.emial,
+    "email": req.query.email,
     "DOB": req.query.DOB
   });
 
@@ -110,6 +111,39 @@ router.delete('/:email', (req, res) => {
   
   users = users.filter((user) => user.email != email);
   res.status(200).json({ message: `User with email: '${email}' successfully deleted.` });
+});
+
+
+// extra practice endpoints
+
+app.get('/lastName/:lastName', (req, res) => {
+  const lastName = req.params.lastNama;
+  const foundLastName = users.filter((user) => user.lastName === lastName);
+
+  if (!lastNameFound) {
+    return res.status(403).json({ message: `Invalid info. Last name not found` });
+  }
+  
+  return res.status(200).json(foundLastName);
+});
+
+
+// function to convert a date string in the format "dd-mm-yyyy" ot the Date object
+const getDateFromString = (strDate) => {
+  let [dd, mm, yyyy] = strDate.split('-');
+
+  return new Date(yyyy + "/" + mm + "/" + dd);
+}
+
+router.get('/sort', (req, res) => {
+  let sorted_users = users.sort((a, b) => {     // Sort the users array by DOB in ascending order
+    let d1 = getDateFromString(a.DOB);
+    let d2 = getDateFromString(b.DOB);
+    
+    return d1 - d2;
+  });
+
+  res.status(200).json(sorted_users);       // sending the sorted_users array as the response to the client
 });
 
 module.exports = router;
